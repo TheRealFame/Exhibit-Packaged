@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.nokse22.Exhibit</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>Exhibit</name>
+  <name xml:lang="uk">Експонат</name>
+  <name xml:lang="ru">Exhibit</name>
+  <name xml:lang="pt_BR">Exhibit</name>
+  <name xml:lang="nb">Exhibit</name>
+  <name xml:lang="it">Exhibit</name>
+  <name xml:lang="hi">एक्ज़िबिट</name>
+  <name xml:lang="fr">Exhibit</name>
+  <name xml:lang="es">Exhibit</name>
+  <name xml:lang="de">Ausstellung</name>
+  <name xml:lang="bg">Изложба</name>
+  <summary>Preview your 3D models</summary>
+  <summary xml:lang="uk">Переглядайте ваші 3D-моделі</summary>
+  <summary xml:lang="ru">Предварительный просмотр ваших 3D-моделей</summary>
+  <summary xml:lang="pt_BR">Visualize seus modelos 3D</summary>
+  <summary xml:lang="nb">Forhåndsvis 3D-modellene dine</summary>
+  <summary xml:lang="it">Visualizza l'anteprima dei tuoi modelli 3D</summary>
+  <summary xml:lang="hi">अपने 3डी मॉडल का पूर्वावलोकन करें</summary>
+  <summary xml:lang="fr">Prévisualisez vos modèles 3D</summary>
+  <summary xml:lang="es">Previsualice sus modelos 3D</summary>
+  <summary xml:lang="de">Betrachte dein 3D Model</summary>
+  <summary xml:lang="bg">Преглеждайте вашите 3D модели</summary>
+  <description>
+    <p>
+      Based on the F3D library, it supports many file formats, from digital content to scientific
+      datasets including glTF, STL, STEP, PLY, OBJ, FBX, USD, Alembic and many more. You can drag
+      and drop 3d models into the app and export an image of the rendered model. Change many
+      settings like tone mapping, ambient occlusion, anti aliasing, material roughness, metallic,
+      color and opacity to achieve the perfect render. You can use an HDRI image or a custom color
+      as a background.
+    </p>
+    <p xml:lang="uk">Ця програма базується на бібліотеці F3D яка підтримує багато форматів файлів, від цифрового вмісту до наукових даних, включаючи glTF, STL, STEP, PLY, OBJ, FBX, USD, Alembic та багато інших. Ви можете перетягнути і скинути 3D модель у вікно додатку і експортувати оброблену модель у зображення. Також можна змінити багато налаштувань, як тональне відображення, ambient occlusion, згладження, жорсткість матеріалу, металевість, колір та прозорість щоб досягти ідеального зображення. Ви можете використовувати HDRI зображення або колір у якості заднього фону.</p>
+    <p xml:lang="nb">Drivet av F3D-biblioteket støtter Exhibit mange filformater, fra digitalt innhold til vitenskapelige datasetter, nemlig glTF, STL, STEP, PLY, OBJ, FBX, USD, Alembic, og mange flere. Du kan dra og slipp 3D-modeller inn i appen og eksporter et bilde av den gjengitte modellen. Du kan også forandre mange innstillinger, slik som tonekartlegging, omgivelsesokklusjon, antialiasing, materiellujevnhet, metalliskhet, farge, og gjennomsiktighet, for å oppnå den perfekte gjengivelsen. Du kan bruke et HDRI-bilde eller en tilpasset farge som bakgrunn.</p>
+    <p xml:lang="fr">Basé sur la bibliothèque F3D qui prend en charge de nombreux formats de fichiers, du contenu numérique aux ensembles de données scientifiques tels que glTF, USD, STL, STEP, PLY, OBJ, FBX, Alembic et bien d'autres. Glissez-déposez les modèles 3D dans l'application et exportez une image du modèle 3D. Exhibit prend en charge la correspondance tonale, l'occlusion ambiante, l' anti-crénelage et bien plus encore. Vous pouvez utiliser une image HDRI ou une couleur personnalisée comme arrière-plan.</p>
+    <p xml:lang="es">Basada en la biblioteca F3D, admite muchos formatos de archivo, desde contenido digital hasta conjuntos de datos científicos, incluidos glTF, STL, STEP, PLY, OBJ, FBX, USD, Alembic y muchos más. Puedes arrastrar y soltar modelos 3D en la aplicación y exportar una imagen del modelo renderizado. Cambie muchos ajustes como mapeado de tonos, oclusión ambiental, anti aliasing, rugosidad del material, metálico, color y opacidad para conseguir el render perfecto. Puede utilizar una imagen HDRI o un color personalizado como fondo.</p>
+    <p xml:lang="de">Basierend auf der F3D Bibliothek unterstützt es viele Dateiformate. Von Digitalen Inhalten über Wissenschaftliche Datensätze werden die Formate glTF, STL, STEP, PLY, OBJ, FBX, USD, Alembic und viele weiter unterstützt. 3D Modele können einfach über der Anwendung fallengelassen werden und als Bilder exportiert werden. Außerdem können viele Einstellungen angepasst werden, wie der Farbton, Umgebungsverdeckung, Antialiasing und Materialeigenschaften wie Rauheit, metallisches Glänzen, Farbe und die Transparenz um das perfekte Aussehen zu erreichen. Außerdem können HDR Bilder für einen Benutzerdefinierten Hintergrund verwendet werden.</p>
+  </description>
+  <developer id="io.github.nokse22">
+    <name translate="no">Nokse</name>
+  </developer>
+  <url type="homepage">https://github.com/Nokse22/Exhibit</url>
+  <url type="bugtracker">https://github.com/Nokse22/Exhibit/issues</url>
+  <url type="vcs-browser">https://github.com/Nokse22/Exhibit</url>
+  <url type="translate">https://github.com/Nokse22/Exhibit/tree/master/po</url>
+  <url type="donation">https://ko-fi.com/nokse22</url>
+  <translation type="gettext">exhibit</translation>
+  <!-- All graphical applications having a desktop file must have this tag in the MetaInfo.
+  If this is present, appstreamcli compose will pull icons, keywords and categories from the desktop
+  file. -->
+  <launchable type="desktop-id">io.github.nokse22.Exhibit.desktop</launchable>
+  <!-- Use the OARS website (https://hughsie.github.io/oars/generate.html) to generate these and
+  make sure to use oars-1.1 -->
+  <content_rating type="oars-1.1"/>
+  <!-- Applications should set a brand color in both light and dark variants like so -->
+  <branding>
+    <color type="primary" scheme_preference="light">#E5A50A</color>
+    <color type="primary" scheme_preference="dark">#1a5fb4</color>
+  </branding>
+  <screenshots>
+    <screenshot type="default">
+      <image>
+        https://raw.githubusercontent.com/Nokse22/Exhibit/master/data/resources/screenshot%201.png
+      </image>
+      <caption>3D Benchy</caption>
+      <caption xml:lang="fr">Aperçu du bateau Benchy en 3D </caption>
+    </screenshot>
+    <screenshot>
+      <image>
+        https://raw.githubusercontent.com/Nokse22/Exhibit/master/data/resources/screenshot%202.png
+      </image>
+      <caption>Retro Computer Setup with a HDRI skybox</caption>
+      <caption xml:lang="uk">Ретро-комп'ютер з HDRI скайбоксом</caption>
+      <caption xml:lang="nb">Et retro-datasett med HDRI-skybox</caption>
+      <caption xml:lang="fr">Ordinateur vintage avec un fond HDRI</caption>
+      <caption xml:lang="es">Configuración de ordenador retro con un skybox HDRI</caption>
+      <caption xml:lang="de">Alter Computer mit HDR Hintergrund</caption>
+    </screenshot>
+    <screenshot>
+      <image>
+        https://raw.githubusercontent.com/Nokse22/Exhibit/master/data/resources/screenshot%203.png
+      </image>
+      <caption>Green Metallic Suzanne</caption>
+      <caption xml:lang="uk">Зелена металева Сюзанна</caption>
+      <caption xml:lang="ru">Зеленая металлическая Сюзанна</caption>
+      <caption xml:lang="nb">Grøn metallisk Suzanne</caption>
+      <caption xml:lang="hi">ग्रीन मेटैलिक सुज़ैन</caption>
+      <caption xml:lang="fr">Suzanne en métal vert</caption>
+      <caption xml:lang="es">Verde metalizado Suzanne</caption>
+      <caption xml:lang="de">Grün-metallische Suzanne</caption>
+    </screenshot>
+    <screenshot>
+      <image>
+        https://raw.githubusercontent.com/Nokse22/Exhibit/master/data/resources/screenshot%204.png
+      </image>
+      <caption>Cow with an HDRI background and dark theme</caption>
+      <caption xml:lang="uk">Корова з HDRI заднім фоном і темним стилем інтерфейсу</caption>
+      <caption xml:lang="nb">Ku med HDRI-skybox og mørk drakt</caption>
+      <caption xml:lang="fr">Vache avec un arrière-plan HDRI et un thème sombre</caption>
+      <caption xml:lang="es">Vaca con fondo HDRI y tema oscuro</caption>
+      <caption xml:lang="de">Kuh mit HDR Hintergrund im dunklem Thema</caption>
+    </screenshot>
+    <screenshot>
+      <image>
+        https://raw.githubusercontent.com/Nokse22/Exhibit/master/data/resources/screenshot%205.png
+      </image>
+      <caption>Vase 3d scan with HDRI skybox</caption>
+      <caption xml:lang="uk">3д скан вази з HDRI скайбоксом</caption>
+      <caption xml:lang="nb">En 3D-skanning av en vase med HDRI-skybox</caption>
+      <caption xml:lang="fr">Scan 3D d'un vase avec skybox HDRI</caption>
+      <caption xml:lang="es">Jarrón escaneado en 3D con skybox HDRI</caption>
+      <caption xml:lang="de">3D Scan einer Vase mit HDR Hintergrund</caption>
+    </screenshot>
+    <screenshot>
+      <image>
+        https://raw.githubusercontent.com/Nokse22/Exhibit/master/data/resources/screenshot%206.png
+      </image>
+      <caption>Point cloud of a boat with dark theme</caption>
+      <caption xml:lang="uk">Човен з темним стилем інтерфейсу</caption>
+      <caption xml:lang="nb">Punktsky av en båt med mørk drakt</caption>
+      <caption xml:lang="fr">Nuage de points d'un bateau avec thème sombre</caption>
+      <caption xml:lang="es">Nube de puntos de un barco con tema oscuro</caption>
+      <caption xml:lang="de">Ein Boot als Punktewolke im dunklem Thema</caption>
+    </screenshot>
+    <screenshot>
+      <image>
+        https://raw.githubusercontent.com/Nokse22/Exhibit/master/data/resources/screenshot%207.png
+      </image>
+      <caption>Rigged model showing armature with dark theme</caption>
+      <caption xml:lang="fr">Modèle avec Rig montrant une armature avec un thème sombre</caption>
+    </screenshot>
+  </screenshots>
+  <releases>
+    <release version="1.6.0" date="2026-01-21">
+      <description translate="no">
+        <ul>
+          <li>Add animation support</li>
+          <li>Update to work with the latest version of f3d</li>
+          <li>Add support for showing model armature</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.5.1" date="2025-08-01">
+      <description translate="no">
+        <ul>
+          <li>Fixed bug</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.5.0" date="2025-07-31">
+      <description translate="no">
+        <ul>
+          <li>Added loader</li>
+          <li>Improve overlaid buttons visibility</li>
+          <li>Simplify UI removing some buttons</li>
+          <li>Improve drop UI</li>
+          <li>Update GNOME runtime</li>
+          <li>Added Norwegian Bokmål translation (turtlegarden)</li>
+          <li>Added German translation (Vortex Acherontic)</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.4.2" date="2024-11-16">
+      <description translate="no">
+        <ul>
+          <li>Added Norwegian Bokmål translation (turtlegarden)</li>
+          <li>Added German translation (Vortex Acherontic)</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.4.1" date="2024-09-29">
+      <description translate="no">
+        <ul>
+          <li>Fixed bug</li>
+          <li>Added Ukrainian translation (volkov)</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.4.0" date="2024-09-19">
+      <description translate="no">
+        <ul>
+          <li>Updated to GNOME 47</li>
+          <li>Removed octet-stream mime type</li>
+          <li>Now using the default GTK renderer</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.3.1" date="2024-09-04">
+      <description translate="no">
+        <ul>
+          <li>Fixed Bugs</li>
+          <li>Added Russian Translation</li>
+          <li>Updated Translations</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.3.0" date="2024-07-31">
+      <description translate="no">
+        <ul>
+          <li>Using latest stable release of F3D</li>
+          <li>Added open with external app button</li>
+          <li>Reworked how the settings works</li>
+          <li>Added four default presets for different files types</li>
+          <li>Added bundled HDRIs and custom with thumbnails</li>
+          <li>Improved mimetype names</li>
+          <li>Added pinch to zoom</li>
+          <li>Changed some shortcuts</li>
+          <li>Added different model coloring modes</li>
+          <li>Changed some settings UI</li>
+          <li>Added automatic reload on file change</li>
+          <li>Added saving custom settings</li>
+          <li>Added French translation (Thibaut)</li>
+          <li>Translation updates</li>
+          <li>Added help pages</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.2.0" date="2024-06-17">
+      <description translate="no">
+        <ul>
+          <li>Changed app design</li>
+          <li>Added rendering as points</li>
+          <li>Added material roughness, metallic, color and opacity</li>
+          <li>Added loading as scene or geometry</li>
+          <li>Added movements with keys</li>
+          <li>Improved HDRI loading UI</li>
+          <li>Added USD support</li>
+          <li>Added dark/light/follow theme selection</li>
+          <li>Added Italian translation (Albano Battistella)</li>
+          <li>Added Spanish translation (haggen88)</li>
+          <li>Added Bulgarian translation (twlvnn)</li>
+          <li>Added Hindi translation (Scrambled777)</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.0.1" date="2024-06-06">
+      <description translate="no">
+        <p>First Release</p>
+      </description>
+    </release>
+  </releases>
+</component>

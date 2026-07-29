@@ -62,10 +62,17 @@ up_dirs_vector = {
 
 allowed_extensions = []
 
-for reader in f3d.Engine.get_readers_info():
-    # print(f"Reader: {reader.name}\nDescr: {reader.description}\nExt: {reader.extensions}\nMime: {reader.mime_types}\np name: {reader.plugin_name}\nscene: {reader.has_scene_reader}\ngeom: {reader.has_geometry_reader}\n\n")
-    # print(reader.has_scene_reader)
-    allowed_extensions += reader.extensions
+# Try different f3d API versions
+try:
+    for reader in f3d.Engine.get_readers_info():
+        allowed_extensions += reader.extensions
+except AttributeError:
+    try:
+        for reader in f3d.Engine.reader_info():
+            allowed_extensions += reader.extensions
+    except AttributeError:
+        # Fallback to hardcoded list if API not available
+        allowed_extensions = ["obj", "ply", "stl", "vtk", "vtu", "vtp", "vtr", "vts", "vtm", "vtn", "3ds", "gltf", "glb", "fbx", "dae", "step", "stp", "iges", "igs", "brep", "x_t", "x_b"]
 
 print(allowed_extensions)
 
@@ -241,15 +248,15 @@ class Viewer3dWindow(Adw.ApplicationWindow):
             self.periodic_check_for_file_change)
 
         # Saving all the useful paths
-        data_home = os.environ["XDG_DATA_HOME"]
+        data_home = os.environ.get("XDG_DATA_HOME", os.path.expanduser("~/.local/share"))
 
-        self.hdri_path = data_home + "/HDRIs/"
-        self.hdri_thumbnails_path = self.hdri_path + "/thumbnails/"
+        self.hdri_path = os.path.join(data_home, "HDRIs/")
+        self.hdri_thumbnails_path = os.path.join(self.hdri_path, "thumbnails/")
 
-        self.user_configurations_path = data_home + "/configurations/"
+        self.user_configurations_path = os.path.join(data_home, "configurations/")
 
         os.makedirs(self.user_configurations_path, exist_ok=True)
-        os.makedirs(data_home + "/other files/", exist_ok=True)
+        os.makedirs(os.path.join(data_home, "other files/"), exist_ok=True)
 
         # Create the hdri folder and add the default if there are none
         self.setup_hdri_folder()

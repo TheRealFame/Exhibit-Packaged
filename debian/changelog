@@ -1,0 +1,6 @@
+exhibit (1.0-1) unstable; urgency=medium
+
+  * Initial release.
+  * 3D model viewer for GNOME using f3d for rendering.
+
+ -- nokse22 <nokse22@users.noreply.github.com>  Wed, 08 Jul 2026 02:01:12 -0400

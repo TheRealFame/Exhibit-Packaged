@@ -45,6 +45,51 @@ Extract the downloaded .zip file and install it clicking on the flatpak file or 
 
 `flatpak install io.github.nokse22.Exhibit.flatpak`
 
+### Debian Package (.deb)
+
+A Debian package is available for Debian-based distributions (Ubuntu, Linux Mint, etc.). Download the latest `.deb` file from the [Actions page](https://github.com/Nokse22/Exhibit/actions) under the "deb" workflow.
+
+**Installation:**
+
+```sh
+sudo dpkg -i exhibit_1.0-1_amd64.deb
+```
+
+**Python Dependencies:**
+
+The deb package requires Python dependencies that are not bundled due to version compatibility. Install them with pip:
+
+```sh
+pip install --break-system-packages f3d Wand
+```
+
+**Note:** The `--break-system-packages` flag is used to install system-wide. Alternatively, you can use a virtual environment or `pipx` if preferred.
+
+### AppImage
+
+An AppImage is available for most Linux distributions. Download the latest `.AppImage` file from the [Actions page](https://github.com/Nokse22/Exhibit/actions) under the "AppImage" workflow.
+
+**Installation:**
+
+```sh
+chmod +x Exhibit-x86_64.AppImage
+./Exhibit-x86_64.AppImage
+```
+
+**Python Dependencies:**
+
+The AppImage requires Python dependencies that are not bundled due to version compatibility. Install them with pip:
+
+```sh
+pip install --break-system-packages f3d Wand
+```
+
+**Note:** The AppImage relies on your system's Python runtime and GTK libraries. Ensure you have Python 3 and GTK4 installed on your system.
+
+**Troubleshooting:**
+
+If you encounter any issues during installation or runtime, please refer to the [PACKAGING_TROUBLESHOOTING.md](PACKAGING_TROUBLESHOOTING.md) guide for solutions to common problems.
+
 ### From source
 
 You just need to clone the repository
