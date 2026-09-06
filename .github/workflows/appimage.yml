@@ -46,7 +46,7 @@ jobs:
 
       - name: Install F3D from pip (prebuilt wheel, matches Exhibit 3.5 API)
         run: |
-          pip3 install --break-system-packages f3d 2>/dev/null || pip3 install f3d
+          sudo pip3 install --break-system-packages f3d
           find /usr -name "f3d" -type d 2>/dev/null || true
           find /usr -name "f3d*.so" 2>/dev/null || true
 
@@ -73,8 +73,11 @@ jobs:
           # Use host GI typelibs (bundled 24.04 typelibs mismatch host 26.04 libs)
           
           # Copy f3d Python module and library
-          find /usr -name "f3d" -type d -path "*/python*" -exec cp -r {} AppDir/usr/lib/python3/dist-packages/ \; 2>/dev/null || true
-          find /usr/local -name "f3d" -type d -path "*/python*" -exec cp -r {} AppDir/usr/lib/python3/dist-packages/ \; 2>/dev/null || true
+          find /usr /usr/local "$HOME/.local" /tmp/f3d-pip -name "f3d" -type d -path "*/python*" 2>/dev/null | head -5
+          find /usr /usr/local "$HOME/.local" /tmp/f3d-pip -name "f3d" -type d -path "*/python*" -exec cp -r {} AppDir/usr/lib/python3/dist-packages/ \; 2>/dev/null || true
+          # Also copy from user site-packages explicitly
+          cp -r $HOME/.local/lib/python*/site-packages/f3d AppDir/usr/lib/python3/dist-packages/ 2>/dev/null || true
+          cp -r /tmp/f3d-pip/f3d AppDir/usr/lib/python3/dist-packages/ 2>/dev/null || true
           cp /usr/lib/x86_64-linux-gnu/libf3d.so* AppDir/usr/lib/ 2>/dev/null || true
           cp /usr/local/lib/libf3d.so* AppDir/usr/lib/ 2>/dev/null || true
           cp /usr/lib/x86_64-linux-gnu/libvtkext.so AppDir/usr/lib/ 2>/dev/null || true
