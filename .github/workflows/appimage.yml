@@ -64,7 +64,7 @@ jobs:
         run: |
           rm -rf AppDir builddir
           meson setup builddir --prefix=/usr
-          DESTDIR=AppDir ninja -C builddir install
+          DESTDIR="$(pwd)/AppDir" ninja -C builddir install
 
       - name: Build AppImage
         run: |
