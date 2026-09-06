@@ -71,15 +71,8 @@ jobs:
 
       - name: Build AppImage
         run: |
-          # Copy Python interpreter and libraries (but NOT system libraries like libc)
-          mkdir -p AppDir/usr/bin AppDir/usr/lib
-          cp -L /usr/bin/python3 AppDir/usr/bin/python3
-          cp -r /usr/lib/python3.* AppDir/usr/lib/
-          cp /usr/lib/x86_64-linux-gnu/libpython3.*so* AppDir/usr/lib/ 2>/dev/null || true
-          
-          # Use host GTK/Adwaita - do not bundle (avoids 24.04 vs 26.04 mismatch)
+          # Use host Python/GI/GTK - do not bundle (avoids 24.04 vs 26.04 mismatch, host provides Python 3.14 + GTK 4.22)
           mkdir -p AppDir/usr/lib/python3/dist-packages
-          cp -r /usr/lib/python3/dist-packages/gi AppDir/usr/lib/python3/dist-packages/ 2>/dev/null || true
           
           # Copy f3d Python module and library
           find /usr -name "f3d" -type d -path "*/python*" -exec cp -r {} AppDir/usr/lib/python3/dist-packages/ \; 2>/dev/null || true
