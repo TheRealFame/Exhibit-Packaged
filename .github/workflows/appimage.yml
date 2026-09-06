@@ -120,6 +120,8 @@ jobs:
           cp /usr/lib/x86_64-linux-gnu/libopen-rte.so* AppDir/usr/lib/ 2>/dev/null || true
           cp /usr/lib/x86_64-linux-gnu/libhwloc.so* AppDir/usr/lib/ 2>/dev/null || true
           cp /usr/lib/x86_64-linux-gnu/libevent*.so* AppDir/usr/lib/ 2>/dev/null || true
+          # Bundle Wand (Python ImageMagick) for Exhibit - required at runtime (window.py imports wand)
+          pip3 install --no-deps --target=AppDir/usr/lib/python3/dist-packages Wand 2>/dev/null || pip3 install --break-system-packages --target=AppDir/usr/lib/python3/dist-packages Wand 2>/dev/null || true
           
           # Rename original exhibit script and create wrapper
           mv AppDir/usr/bin/exhibit AppDir/usr/bin/exhibit.real
