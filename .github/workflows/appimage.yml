@@ -39,7 +39,10 @@ jobs:
             patchelf \
             gettext \
             itstool \
-            librsvg2-bin
+            librsvg2-bin \
+            libhdf5-dev \
+            libnetcdf-dev \
+            libaec-dev
 
       - name: Install F3D from source
         run: |
