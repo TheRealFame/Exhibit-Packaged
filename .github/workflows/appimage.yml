@@ -121,7 +121,7 @@ jobs:
             [ -e "$target" ] || continue
             ldd "$target" 2>/dev/null | awk '{print $3}' | grep '^/' | sort -u | while read lib; do
               case "$lib" in
-                */ld-linux*|*libc.so.6|*libm.so.6|*libpthread*|*libdl.so.2|*librt.so.1) continue;;
+                */ld-linux*|*libc.so.6|*libm.so.6|*libpthread*|*libdl.so.2|*librt.so.1|*libglib*|*libgobject*|*libgio*|*libgmodule*|*libgtk*|*libadwaita*|*libpango*|*libcairo*|*libgdk*|*libgraphene*|*libharfbuzz*|*libfribidi*) continue;;
                 *) cp -L -n "$lib" AppDir/usr/lib/ 2>/dev/null || cp -L -n "$lib" AppDir/usr/lib/x86_64-linux-gnu/ 2>/dev/null || true;;
               esac
             done
@@ -130,7 +130,7 @@ jobs:
           for lib in AppDir/usr/lib/*.so*; do
             [ -f "$lib" ] || continue
             ldd "$lib" 2>/dev/null | awk '{print $3}' | grep '^/' | sort -u | while read dep; do
-              case "$dep" in */ld-linux*|*libc.so.6|*libm.so.6|*libpthread*|*libdl.so.2|*librt.so.1) continue;; esac
+              case "$dep" in */ld-linux*|*libc.so.6|*libm.so.6|*libpthread*|*libdl.so.2|*librt.so.1|*libglib*|*libgobject*|*libgio*|*libgmodule*|*libgtk*|*libadwaita*|*libpango*|*libcairo*|*libgdk*|*libgraphene*|*libharfbuzz*|*libfribidi*) continue;; esac
               bn=$(basename "$dep")
               [ -f "AppDir/usr/lib/$bn" ] && continue
               [ -f "AppDir/usr/lib/x86_64-linux-gnu/$bn" ] && continue
