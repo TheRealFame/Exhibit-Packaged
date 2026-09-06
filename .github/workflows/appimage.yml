@@ -71,8 +71,15 @@ jobs:
 
       - name: Build AppImage
         run: |
-          # Use host Python/GI/GTK - do not bundle (avoids 24.04 vs 26.04 mismatch, host provides Python 3.14 + GTK 4.22)
-          mkdir -p AppDir/usr/lib/python3/dist-packages
+          # Bundle Python 3.12 + GI (host is 3.14, f3d extension is 3.12), but use host GLib/GTK to avoid mismatch
+          mkdir -p AppDir/usr/bin AppDir/usr/lib
+          cp -L /usr/bin/python3 AppDir/usr/bin/python3 2>/dev/null || true
+          cp -r /usr/lib/python3.* AppDir/usr/lib/ 2>/dev/null || true
+          cp /usr/lib/x86_64-linux-gnu/libpython3.*so* AppDir/usr/lib/ 2>/dev/null || true
+          mkdir -p AppDir/usr/lib/python3/dist-packages AppDir/usr/lib/girepository-1.0
+          cp -r /usr/lib/python3/dist-packages/gi AppDir/usr/lib/python3/dist-packages/ 2>/dev/null || true
+          cp /usr/lib/x86_64-linux-gnu/girepository-1.0/*.typelib AppDir/usr/lib/girepository-1.0/ 2>/dev/null || true
+          find /usr -name "Adw-*.typelib" -exec cp -L -n {} AppDir/usr/lib/girepository-1.0/ \; 2>/dev/null || true/python3/dist-packages
           
           # Copy f3d Python module and library
           find /usr -name "f3d" -type d -path "*/python*" -exec cp -r {} AppDir/usr/lib/python3/dist-packages/ \; 2>/dev/null || true
