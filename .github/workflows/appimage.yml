@@ -1,4 +1,5 @@
 name: AppImage
+
 on:
   push:
   pull_request:
@@ -51,7 +52,6 @@ jobs:
             -DF3D_BINDINGS_PYTHON=ON
           cmake --build /tmp/f3d-build --parallel $(nproc)
           sudo cmake --install /tmp/f3d-build
-          # Find where f3d Python module was installed
           find /usr -name "f3d" -type d -path "*/python*" 2>/dev/null || true
           find /usr -name "f3d*.so" 2>/dev/null || true
 
@@ -65,7 +65,6 @@ jobs:
           rm -rf AppDir builddir
           meson setup builddir --prefix=/usr
           DESTDIR=AppDir ninja -C builddir install
-          mv builddir/AppDir .
 
       - name: Build AppImage
         run: |
@@ -73,27 +72,25 @@ jobs:
           mkdir -p AppDir/usr/bin AppDir/usr/lib
           cp -L /usr/bin/python3 AppDir/usr/bin/python3
           cp -r /usr/lib/python3.* AppDir/usr/lib/
-          cp /usr/lib/x86_64-linux-gnu/libpython3.*so* AppDir/usr/lib/
+          cp /usr/lib/x86_64-linux-gnu/libpython3.*so* AppDir/usr/lib/ 2>/dev/null || true
           
           # Copy GTK and Adwaita libraries (exclude system libraries)
-          ldd /usr/lib/x86_64-linux-gnu/libgtk-4.so.1 2>/dev/null | grep "=> /" | awk '{print $3}' | xargs -I {} cp {} AppDir/usr/lib/ 2>/dev/null || true
-          ldd /usr/lib/x86_64-linux-gnu/libadwaita-1.so.0 2>/dev/null | grep "=> /" | awk '{print $3}' | xargs -I {} cp {} AppDir/usr/lib/ 2>/dev/null || true
+          ldd /usr/lib/x86_64-linux-gnu/libgtk-4.so.1 2>/dev/null | grep "=> /" | awk '{print $3}' | xargs -I {} cp -L -n {} AppDir/usr/lib/ 2>/dev/null || true
+          ldd /usr/lib/x86_64-linux-gnu/libadwaita-1.so.0 2>/dev/null | grep "=> /" | awk '{print $3}' | xargs -I {} cp -L -n {} AppDir/usr/lib/ 2>/dev/null || true
           
           # Remove system libraries that should come from host
-          rm -f AppDir/usr/lib/libc.so.* AppDir/usr/lib/libm.so.* AppDir/usr/lib/libdl.so.* AppDir/usr/lib/libpthread.so.*
-          rm -f AppDir/usr/lib/ld-*.so.*
+          rm -f AppDir/usr/lib/libc.so.* AppDir/usr/lib/libm.so.* AppDir/usr/lib/libdl.so.* AppDir/usr/lib/libpthread.so.* 2>/dev/null || true
+          rm -f AppDir/usr/lib/ld-*.so.* 2>/dev/null || true
           
           # Copy GI module and typelibs
           mkdir -p AppDir/usr/lib/python3/dist-packages AppDir/usr/lib/girepository-1.0
-          cp -r /usr/lib/python3/dist-packages/gi AppDir/usr/lib/python3/dist-packages/
+          cp -r /usr/lib/python3/dist-packages/gi AppDir/usr/lib/python3/dist-packages/ 2>/dev/null || true
           cp /usr/lib/x86_64-linux-gnu/girepository-1.0/*.typelib AppDir/usr/lib/girepository-1.0/ 2>/dev/null || true
-          # Ensure Adwaita typelib is copied
-          find /usr -name "Adw-*.typelib" -exec cp {} AppDir/usr/lib/girepository-1.0/ \;
+          find /usr -name "Adw-*.typelib" -exec cp -L -n {} AppDir/usr/lib/girepository-1.0/ \; 2>/dev/null || true
           
           # Copy f3d Python module and library
           find /usr -name "f3d" -type d -path "*/python*" -exec cp -r {} AppDir/usr/lib/python3/dist-packages/ \; 2>/dev/null || true
           find /usr/local -name "f3d" -type d -path "*/python*" -exec cp -r {} AppDir/usr/lib/python3/dist-packages/ \; 2>/dev/null || true
-          find /usr -name "site-packages" -type d -exec find {} -name "f3d" -type d \; -exec cp -r {} AppDir/usr/lib/python3/dist-packages/ \; 2>/dev/null || true
           cp /usr/lib/x86_64-linux-gnu/libf3d.so* AppDir/usr/lib/ 2>/dev/null || true
           cp /usr/local/lib/libf3d.so* AppDir/usr/lib/ 2>/dev/null || true
           cp /usr/lib/x86_64-linux-gnu/libvtkext.so AppDir/usr/lib/ 2>/dev/null || true
@@ -103,10 +100,9 @@ jobs:
           cp -r /usr/share/f3d AppDir/usr/share/ 2>/dev/null || true
           cp -r /usr/lib/f3d AppDir/usr/lib/ 2>/dev/null || true
           cp -r /usr/local/lib/f3d AppDir/usr/lib/ 2>/dev/null || true
-          # Copy all f3d-related libraries
-          find /usr/lib -name "libf3d*.so*" -exec cp {} AppDir/usr/lib/ \; 2>/dev/null || true
-          find /usr/local/lib -name "libf3d*.so*" -exec cp {} AppDir/usr/lib/ \; 2>/dev/null || true
-          # Copy f3d dependencies (TBB, Imath, hdf5, Draco, openexr, assimp, Alembic, etc.)
+          find /usr/lib -name "libf3d*.so*" -exec cp -L -n {} AppDir/usr/lib/ \; 2>/dev/null || true
+          find /usr/local/lib -name "libf3d*.so*" -exec cp -L -n {} AppDir/usr/lib/ \; 2>/dev/null || true
+          # Copy known f3d transitive deps as fallback (ldd closure below covers the rest)
           cp /usr/lib/x86_64-linux-gnu/libtbb*.so* AppDir/usr/lib/ 2>/dev/null || true
           cp /usr/lib/x86_64-linux-gnu/libimath*.so* AppDir/usr/lib/ 2>/dev/null || true
           cp /usr/lib/x86_64-linux-gnu/libhdf5*.so* AppDir/usr/lib/ 2>/dev/null || true
@@ -120,10 +116,43 @@ jobs:
           cp /usr/lib/x86_64-linux-gnu/libusd*.so* AppDir/usr/lib/ 2>/dev/null || true
           cp /usr/lib/x86_64-linux-gnu/libboost_*.so* AppDir/usr/lib/ 2>/dev/null || true
           cp /usr/lib/x86_64-linux-gnu/libjsoncpp.so* AppDir/usr/lib/ 2>/dev/null || true
-          # Copy OpenGL and other common libraries
           cp /usr/lib/x86_64-linux-gnu/libGL*.so* AppDir/usr/lib/ 2>/dev/null || true
           cp /usr/lib/x86_64-linux-gnu/libEGL*.so* AppDir/usr/lib/ 2>/dev/null || true
           cp /usr/lib/x86_64-linux-gnu/libX*.so* AppDir/usr/lib/ 2>/dev/null || true
+          cp /usr/lib/x86_64-linux-gnu/libnetcdf.so* AppDir/usr/lib/ 2>/dev/null || true
+          cp /usr/lib/x86_64-linux-gnu/libsz.so* AppDir/usr/lib/ 2>/dev/null || true
+          cp /usr/lib/x86_64-linux-gnu/libaec.so* AppDir/usr/lib/ 2>/dev/null || true
+          cp /usr/lib/x86_64-linux-gnu/libGLEW.so* AppDir/usr/lib/ 2>/dev/null || true
+          cp /usr/lib/x86_64-linux-gnu/libmpi*.so* AppDir/usr/lib/ 2>/dev/null || true
+          cp /usr/lib/x86_64-linux-gnu/libopen-pal.so* AppDir/usr/lib/ 2>/dev/null || true
+          cp /usr/lib/x86_64-linux-gnu/libopen-rte.so* AppDir/usr/lib/ 2>/dev/null || true
+          cp /usr/lib/x86_64-linux-gnu/libhwloc.so* AppDir/usr/lib/ 2>/dev/null || true
+          cp /usr/lib/x86_64-linux-gnu/libevent*.so* AppDir/usr/lib/ 2>/dev/null || true
+
+          # Bundle complete F3D/VTK closure via ldd (fixes missing transitive deps libnetcdf, libhdf5_serial, libmpi, etc.)
+          mkdir -p AppDir/usr/lib/x86_64-linux-gnu
+          for target in AppDir/usr/lib/python3/dist-packages/f3d/pyf3d*.so AppDir/usr/lib/libf3d.so* AppDir/usr/lib/libvtk*.so*; do
+            [ -e "$target" ] || continue
+            ldd "$target" 2>/dev/null | awk '{print $3}' | grep '^/' | sort -u | while read lib; do
+              case "$lib" in
+                */ld-linux*|*libc.so.6|*libm.so.6|*libpthread*|*libdl.so.2|*librt.so.1) continue;;
+                *) cp -L -n "$lib" AppDir/usr/lib/ 2>/dev/null || cp -L -n "$lib" AppDir/usr/lib/x86_64-linux-gnu/ 2>/dev/null || true;;
+              esac
+            done
+          done
+          # Second pass for transitive deps of newly bundled libs
+          for lib in AppDir/usr/lib/*.so*; do
+            [ -f "$lib" ] || continue
+            ldd "$lib" 2>/dev/null | awk '{print $3}' | grep '^/' | sort -u | while read dep; do
+              case "$dep" in */ld-linux*|*libc.so.6|*libm.so.6|*libpthread*|*libdl.so.2|*librt.so.1) continue;; esac
+              bn=$(basename "$dep")
+              [ -f "AppDir/usr/lib/$bn" ] && continue
+              [ -f "AppDir/usr/lib/x86_64-linux-gnu/$bn" ] && continue
+              cp -L -n "$dep" AppDir/usr/lib/ 2>/dev/null || true
+            done
+          done
+          # DRI for software GL fallback
+          cp -rL /usr/lib/x86_64-linux-gnu/dri AppDir/usr/lib/x86_64-linux-gnu/ 2>/dev/null || true
           
           # Rename original exhibit script and create wrapper
           mv AppDir/usr/bin/exhibit AppDir/usr/bin/exhibit.real
@@ -131,11 +160,9 @@ jobs:
           #!/usr/bin/env python3
           import os
           import sys
-          # Set paths relative to APPDIR
           appdir = os.environ.get('APPDIR', '')
           if appdir:
               os.environ['PYTHONPATH'] = os.path.join(appdir, 'usr/share/exhibit') + ':' + os.environ.get('PYTHONPATH', '')
-              # Monkey-patch sys.argv to pass through to the real script
               sys.argv[0] = os.path.join(appdir, 'usr/bin/exhibit.real')
           exec(open(os.path.join(appdir, 'usr/bin/exhibit.real') if appdir else '/usr/bin/exhibit.real').read())
           EOF
@@ -147,14 +174,14 @@ jobs:
           
           # Copy desktop file and icon
           cp AppDir/usr/share/applications/io.github.nokse22.Exhibit.desktop AppDir/
-          cp AppDir/usr/share/icons/hicolor/scalable/apps/io.github.nokse22.Exhibit.svg AppDir/.DirIcon
-          rsvg-convert AppDir/.DirIcon -o AppDir/io.github.nokse22.Exhibit.png
+          cp AppDir/usr/share/icons/hicolor/scalable/apps/io.github.nokse22.Exhibit.svg AppDir/.DirIcon 2>/dev/null || cp AppDir/usr/share/icons/hicolor/scalable/apps/io.github.nokse22.Exhibit.svg AppDir/ 2>/dev/null || true
+          rsvg-convert AppDir/.DirIcon -o AppDir/io.github.nokse22.Exhibit.png 2>/dev/null || true
           
           # Create AppRun
           cat > AppDir/AppRun << 'EOF'
           #!/bin/bash
           export PATH="${APPDIR}/usr/bin:${PATH}"
-          export LD_LIBRARY_PATH="${APPDIR}/usr/lib:${LD_LIBRARY_PATH}"
+          export LD_LIBRARY_PATH="${APPDIR}/usr/lib:${APPDIR}/usr/lib/x86_64-linux-gnu:${LD_LIBRARY_PATH}"
           export PYTHONPATH="${APPDIR}/usr/share/exhibit:${APPDIR}/usr/lib/python3/dist-packages:${PYTHONPATH}"
           export GI_TYPELIB_PATH="${APPDIR}/usr/lib/girepository-1.0:${GI_TYPELIB_PATH}"
           export XDG_DATA_DIRS="${APPDIR}/usr/share:${XDG_DATA_DIRS}"
@@ -164,7 +191,7 @@ jobs:
           chmod +x AppDir/AppRun
           
           # Extract and run appimagetool
-          ./appimagetool-x86_64.AppImage --appimage-extract
+          ./appimagetool-x86_64.AppImage --appimage-extract 2>/dev/null || true
           ARCH=x86_64 ./squashfs-root/AppRun AppDir
 
       - name: Upload artifact
@@ -177,7 +204,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         run: |
           TAG=${GITHUB_REF#refs/tags/}
-          curl -s https://api.github.com/repos/Nokse22/Exhibit/releases/tags/${TAG} | jq -r '.body' > release_notes.md
+          curl -s https://api.github.com/repos/Nokse22/Exhibit/releases/tags/${TAG} | jq -r '.body // empty' > release_notes.md || true
 
       - name: Release
         if: startsWith(github.ref, 'refs/tags/')
