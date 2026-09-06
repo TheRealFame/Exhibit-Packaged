@@ -44,18 +44,10 @@ jobs:
             libnetcdf-dev \
             libaec-dev
 
-      - name: Install F3D from source
+      - name: Install F3D from pip (prebuilt wheel, matches Exhibit 3.5 API)
         run: |
-          git clone --depth=1 --branch v2.5.0 https://github.com/f3d-app/f3d.git /tmp/f3d
-          cmake -S /tmp/f3d -B /tmp/f3d-build \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_INSTALL_PREFIX=/usr \
-            -DF3D_BUILD_APPLICATION=OFF \
-            -DF3D_MODULE_UI=OFF \
-            -DF3D_BINDINGS_PYTHON=ON
-          cmake --build /tmp/f3d-build --parallel $(nproc)
-          sudo cmake --install /tmp/f3d-build
-          find /usr -name "f3d" -type d -path "*/python*" 2>/dev/null || true
+          pip3 install --break-system-packages f3d 2>/dev/null || pip3 install f3d
+          find /usr -name "f3d" -type d 2>/dev/null || true
           find /usr -name "f3d*.so" 2>/dev/null || true
 
       - name: Download appimagetool
